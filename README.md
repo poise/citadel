@@ -54,6 +54,11 @@ where some secrets need to be shared by overlapping subsets of your servers. A
 possible improvement to this would be to make a script to create all needed
 composite IAM roles, possibly driven by Chef roles or other metadata.
 
+Attributes
+----------
+
+* `node['citadel']['bucket']` – The default S3 bucket to use.
+
 Recipe Usage
 ------------
 
@@ -105,3 +110,19 @@ security risk as they will end up visible in the node data, or in the role/envir
 that sets them. This can be mitigated using Enterprise Chef ACLs, however such
 configurations are generally error-prone due to the defaults being wide open.
 
+Recommended Folder Layout
+-------------------------
+
+Within your S3 bucket I recommend you create one folder for each group of
+secrets, and in your IAM policies have one statement per group. Each group of
+secrets is a set of data with identical security requirements. Many groups will
+start out only containing a single file, however having the flexibility to
+change this in the future allows for things like key rotation without rewriting
+all of your IAM policies.
+
+Managing Secrets
+----------------
+
+You can use any S3 client you prefer to manage your secrets, however make sure
+that new files are set to private (accessible only to the creating user) by
+default.
