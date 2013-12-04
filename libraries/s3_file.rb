@@ -29,7 +29,7 @@ require 'time'
 require 'openssl'
 require 'base64'
 
-module Citadel
+class Citadel
   module S3
     extend self
 
@@ -37,6 +37,7 @@ module Citadel
     RestClient.proxy = ENV['http_proxy']
 
     def get(bucket, path, aws_access_key_id, aws_secret_access_key, token=nil)
+      path = "/#{path}" unless path[0] == '/'
       now = Time.now().utc.strftime('%a, %d %b %Y %H:%M:%S GMT')
 
       string_to_sign = "GET\n\n\n#{now}\n"

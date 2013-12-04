@@ -16,35 +16,14 @@
 # limitations under the License.
 #
 
-require 'forwardable'
+class Citadel
+  def initialize(node, bucket)
+    @node = node
+    @bucket = bucket
+  end
 
-module Citadel
-  # Secret data retrieved from S3
-  class Secret < String
-    def initialize(node, bucket, key)
-      super()
-      @node = node
-      @bucket = bucket
-      @key = key
-    end
-
-    # Dispatch all String methods to #to_s
-    extend Forwardable
-    def_delegators(:to_s, *(String.instance_methods - Object.instance_methods))
-
-    # Allow building up keys like a Hash
-    def [](subkey)
-      new_key = if @key
-        "#{@key}/#{subkey}"
-      else
-        subkey
-      end
-      self.class.new(@node, @bucket, new_key)
-    end
-
-    def to_s
-      Citadel.get(@node, @bucket, @key)
-    end
+  def [](key)
+    self.class.get(@node, @bucket, key)
   end
 
   def self.get(node, bucket, key)
@@ -65,13 +44,13 @@ module Citadel
       raise 'Unable to load secrets from S3, no S3 credentials found'
     end
     Chef::Log.debug("citadel: Retrieving #{bucket}/#{key}")
-    Citadel::S3.get(bucket, key, key_id, secret_key, token)
+    Citadel::S3.get(bucket, key, key_id, secret_key, token).to_s
   end
 
   # Helper module for the DSL extension
   module ChefDSL
     def citadel(bucket=nil)
-      Secret.new(node, bucket, nil)
+      Citadel.new(node, bucket)
     end
   end
 end
