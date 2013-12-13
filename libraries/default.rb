@@ -17,34 +17,31 @@
 #
 
 class Citadel
-  def initialize(node, bucket)
+  attr_reader :bucket, :access_key_id, :secret_access_key, :token
+
+  def initialize(node, bucket=nil)
     @node = node
-    @bucket = bucket
-  end
+    @bucket = bucket || node['citadel']['bucket']
 
-  def [](key)
-    self.class.get(@node, @bucket, key)
-  end
-
-  def self.get(node, bucket, key)
-    bucket ||= node['citadel']['bucket']
     if node['citadel']['access_key_id']
       # Manually specified credentials
-      key_id = node['citadel']['access_key_id']
-      secret_key = node['citadel']['secret_access_key']
-      token = nil
+      @access_key_id = node['citadel']['access_key_id']
+      @secret_access_key = node['citadel']['secret_access_key']
     elsif node['ec2'] && node['ec2']['iam'] && node['ec2']['iam']['security-credentials']
       # Creds loaded from EC2 metadata server
       # This doesn't yet handle expiration, but it should
       role_creds = node['ec2']['iam']['security-credentials'].values.first
-      key_id = role_creds['AccessKeyId']
-      secret_key = role_creds['SecretAccessKey']
-      token = role_creds['Token']
+      @access_key_id = role_creds['AccessKeyId']
+      @secret_access_key = role_creds['SecretAccessKey']
+      @token = role_creds['Token']
     else
       raise 'Unable to load secrets from S3, no S3 credentials found'
     end
-    Chef::Log.debug("citadel: Retrieving #{bucket}/#{key}")
-    Citadel::S3.get(bucket, key, key_id, secret_key, token).to_s
+  end
+
+  def [](key)
+    Chef::Log.debug("citadel: Retrieving #{@bucket}/#{key}")
+    Citadel::S3.get(@bucket, key, @access_key_id, @secret_access_key, @token).to_s
   end
 
   # Helper module for the DSL extension
