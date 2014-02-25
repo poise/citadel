@@ -24,35 +24,37 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'rest-client'
 require 'time'
 require 'openssl'
 require 'base64'
 
 class Citadel
+  class CitadelError < Exception; end
+
   module S3
     extend self
 
-    # Global state, boo
-    RestClient.proxy = ENV['http_proxy']
-
     def get(bucket, path, aws_access_key_id, aws_secret_access_key, token=nil)
-      path = "/#{path}" unless path[0] == '/'
+      path = path[1..-1] if path[0] == '/'
       now = Time.now().utc.strftime('%a, %d %b %Y %H:%M:%S GMT')
 
       string_to_sign = "GET\n\n\n#{now}\n"
       string_to_sign << "x-amz-security-token:#{token}\n" if token
-      string_to_sign << "/#{bucket}#{path}"
+      string_to_sign << "/#{bucket}/#{path}"
 
       signed = OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), aws_secret_access_key, string_to_sign)
       signed_base64 = Base64.encode64(signed)
 
       headers = {
-        date: now,
-        authorization: "AWS #{aws_access_key_id}:#{signed_base64}",
+        'date' => now,
+        'authorization' => "AWS #{aws_access_key_id}:#{signed_base64}",
       }
       headers['x-amz-security-token'] = token if token
-      RestClient::Request.execute(method: :get, url: "https://s3.amazonaws.com/#{bucket}#{path}", raw_response: true, headers: headers)
+      begin
+        Chef::HTTP.new("https://#{bucket}.s3.amazonaws.com").get(path, headers)
+      rescue Net::HTTPServerException => e
+        raise CitadelError, "Unable to download #{path}: #{e}"
+      end
     end
 
   end
