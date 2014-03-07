@@ -3,6 +3,7 @@ Citadel cookbook
 
 Using a combination of IAM roles, S3 buckets, and EC2 it is possible to use AWS
 as a trusted-third-party for distributing secret or otherwise sensitive data.
+Requires Chef >= 11.8.0.
 
 Overview
 --------
@@ -126,3 +127,9 @@ Managing Secrets
 You can use any S3 client you prefer to manage your secrets, however make sure
 that new files are set to private (accessible only to the creating user) by
 default.
+
+TLS verification
+----------------
+
+While citadel uses HTTPS, Chef does not verify certificates by default. You can
+enable verification by adding `ssl_verify_mode :verify_peer` to your client.rb.
