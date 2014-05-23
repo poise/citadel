@@ -4,6 +4,8 @@ Citadel cookbook
 Using a combination of IAM roles, S3 buckets, and EC2 it is possible to use AWS
 as a trusted-third-party for distributing secret or otherwise sensitive data.
 
+**NOTE: Upstream development of this cookbook has moved to [poise/citadel](https://github.com/poise/citadel).**
+
 Overview
 --------
 
