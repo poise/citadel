@@ -3,7 +3,6 @@ Citadel cookbook
 
 Using a combination of IAM roles, S3 buckets, and EC2 it is possible to use AWS
 as a trusted-third-party for distributing secret or otherwise sensitive data.
-Requires Chef >= 11.8.0.
 
 Overview
 --------
@@ -15,6 +14,19 @@ used to authorize specific hosts to specific files.
 IAM Roles can be created [in the AWS Console](https://console.aws.amazon.com/iam/home#roles).
 While the policies applied to a role can be changed later, the name cannot so
 be careful when choosing them.
+
+Requirements
+------------
+
+This cookbook requires Chef 11.8 or newer. It also requires the EC2 ohai plugin
+to be active. If you are using a VPC, this may require setting the hint file:
+
+```bash
+$ mkdir -p /etc/chef/ohai/hints
+$ touch /etc/chef/ohai/hints/ec2.json
+```
+
+If you use knife-ec2 to start the instance, the hint file is already set for you.
 
 IAM Policy
 ----------
