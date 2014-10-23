@@ -129,7 +129,7 @@ configurations are generally error-prone due to the defaults being wide open.
 
 Similarly you can use the same attributes with Test-Kitchen
 
-```yml
+```yaml
 provisioner:
   name: chef_solo
   attributes:
