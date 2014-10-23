@@ -125,6 +125,19 @@ security risk as they will end up visible in the node data, or in the role/envir
 that sets them. This can be mitigated using Enterprise Chef ACLs, however such
 configurations are generally error-prone due to the defaults being wide open.
 
+### Testing with Test-Kitchen
+
+Similarly you can use the same attributes with Test-Kitchen
+
+```yml
+provisioner:
+  name: chef_solo
+  attributes:
+    citadel:
+      access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+      secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+```
+
 Recommended Folder Layout
 -------------------------
 
