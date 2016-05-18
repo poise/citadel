@@ -1,7 +1,5 @@
 #
-# Author:: Noah Kantrowitz <noah@coderanger.net>
-#
-# Copyright 2013, Balanced, Inc.
+# Copyright 2016, Noah Kantrowitz
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,11 +14,4 @@
 # limitations under the License.
 #
 
-name 'citadel'
-version '1.0.2'
-
-maintainer 'Noah Kantrowitz'
-maintainer_email 'noah@coderanger.net'
-license 'Apache 2.0'
-description 'DSL for accessing secret data stored on S3 using IAM roles'
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+require 'poise_boiler/rakefile'

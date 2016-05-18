@@ -16,8 +16,9 @@
 # limitations under the License.
 #
 
-# Block the IAM credentials from being stored to the Chef server
 
+# Block the IAM credentials from being stored to the Chef server
+# @api private
 class Chef
   class Node
     old_save = instance_method(:save)
