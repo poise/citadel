@@ -1,7 +1,6 @@
 #
-# Author:: Noah Kantrowitz <noah@coderanger.net>
-#
-# Copyright 2013, Balanced, Inc.
+# Copyright 2013-2016, Balanced, Inc.
+# Copyright 2016, Noah Kantrowitz
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +16,7 @@
 #
 
 
-# Block the IAM credentials from being stored to the Chef server
+# Block the IAM credentials from being stored to the Chef server.
 # @api private
 class Chef
   class Node
@@ -29,11 +28,14 @@ class Chef
         security_credentials = automatic_attrs['ec2']['iam']['security-credentials']
         automatic_attrs['ec2']['iam']['security-credentials'] = {}
       end
-      ret = old_save.bind(self).call
-      unless security_credentials.nil?
-        automatic_attrs['ec2']['iam']['security-credentials'] = security_credentials
+      begin
+        old_save.bind(self).call
+      ensure
+        unless security_credentials.nil?
+          automatic_attrs['ec2']['iam']['security-credentials'] = security_credentials
+        end
       end
-      ret
     end
+
   end
 end

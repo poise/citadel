@@ -1,7 +1,7 @@
 #
-# Copyright 2016, Noah Kantrowitz
 # Copyright 2012-2016, Brandon Adams and other contributors.
 # Copyright 2013-2016, Balanced, Inc.
+# Copyright 2016, Noah Kantrowitz
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
