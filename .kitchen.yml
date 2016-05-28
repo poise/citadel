@@ -1,22 +1,22 @@
 ---
-driver_plugin: vagrant
-driver_config:
-  require_chef_omnibus: true
+#<% IO.read('test/ec2/env').split.map{|s| s.split(/=/)}.each{|(k, v)| ENV[k] = v} if ::File.exist?('test/ec2/env') %>
+#<% require 'poise_boiler' %>
+<%= PoiseBoiler.kitchen(platforms: %w{ubuntu-14.04}, driver: 'ec2') %>
 
-
-
-platforms:
-- name: ubuntu-12.04
-  driver_config:
-    box: opscode-ubuntu-12.04
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
+transport:
+  name: sftp
+  ssh_key: test/ec2/citadel-kitchen.key
 
 suites:
-- name: default
+- name: iam
+  run_list:
+  - recipe[citadel_test]
+  driver:
+    iam_profile_name: citadel-role
+- name: attr
   run_list:
   - recipe[citadel_test]
   attributes:
     citadel:
-      bucket: citadel
-      access_key_id: mykey
-      secret_access_key: mysecret
+      access_key_id: <%= ENV['CITADEL_ACCESS_KEY_ID'] %>
+      secret_access_key: <%= ENV['CITADEL_SECRET_ACCESS_KEY'] %>

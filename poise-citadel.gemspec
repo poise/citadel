@@ -37,4 +37,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'halite', '~> 1.2'
 
   spec.add_development_dependency 'poise-boiler', '~> 1.7'
+  spec.add_development_dependency 'kitchen-ec2', '~> 1.0'
 end
