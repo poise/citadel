@@ -19,7 +19,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'citadel/version'
 
 Gem::Specification.new do |spec|
-  spec.name = 'citadel'
+  spec.name = 'poise-citadel'
   spec.version = Citadel::VERSION
   spec.authors = ['Noah Kantrowitz']
   spec.email = %w{noah@coderanger.net}
@@ -27,6 +27,7 @@ Gem::Specification.new do |spec|
   spec.summary = spec.description
   spec.homepage = 'https://github.com/poise/citadel'
   spec.license = 'Apache 2.0'
+  spec.metadata['halite_name'] = 'citadel'
 
   spec.files = `git ls-files`.split($/)
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
