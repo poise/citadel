@@ -5,6 +5,8 @@ rvm:
 - '2.2'
 env:
   global:
+  - AWS_SECURITY_GROUP_ID=sg-accb7ad7
+  - AWS_SUBNET_ID=subnet-ca674af7
   - AWS_SSH_KEY_ID=citadel-kitchen
   - secure: G68O+EByjjbIZZmMVV2xQvYlAFqW8LHBj/j82E5mspvVxwhpqn5JdEUpPjR9GeD5Cjt2V13l0353hI9/KyZKwx2iuBR3lQQkyAZIb147bUpYT/yQuXLSYEmt7HxyPOrWCZ2aP0253WPGamKX+bK/OUh1PAbOq5EbTh+2qYvWXAE=
   - secure: xXfMmQd6zQ7GUDH2+uGHukNW6ZvJQKIiDVi1rlqTF2IHCcgFzkKGR4Pb9JwEA2c8S0z/KSZ6+3F9o66735Oe53Yvoat18WfdFNrp7q8nPk68hZY2IVA6La7/g3SUhHXvija6d8ywRMwIH3ms6r3aVk2/vQnFxojRzbgxMf54XQg=

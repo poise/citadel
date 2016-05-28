@@ -1,4 +1,5 @@
 #
+# Copyright 2013-2016, Balanced, Inc.
 # Copyright 2016, Noah Kantrowitz
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +15,9 @@
 # limitations under the License.
 #
 
-file '/mysecret' do
-  content citadel['mysecret'].strip
+require 'serverspec'
+set :backend, :exec
+
+describe file('/mysecret') do
+  its(:content) { is_expected.to eq 'allyourbase' }
 end

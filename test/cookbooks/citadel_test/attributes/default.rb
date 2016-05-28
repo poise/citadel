@@ -1,5 +1,4 @@
 #
-# Copyright 2013-2016, Balanced, Inc.
 # Copyright 2016, Noah Kantrowitz
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,21 +14,4 @@
 # limitations under the License.
 #
 
-require 'serverspec'
-set :backend, :exec
-
-describe file('/a') do
-  its(:content) { should == 'citadel' }
-end
-
-describe file('/a') do
-  its(:content) { should == 'citadel' }
-end
-
-describe file('/c') do
-  its(:content) { should == 'mykey' }
-end
-
-describe file('/d') do
-  its(:content) { should == 'mysecret' }
-end
+override['citadel']['bucket'] = 'citadel-kitchen'
