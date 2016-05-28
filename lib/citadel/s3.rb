@@ -43,12 +43,12 @@ class Citadel
     #
     # @param bucket [String] Name of the bucket to use.
     # @param path [String] Path to the object.
-    # @param aws_access_key_id [String] AWS access key ID.
-    # @param aws_secret_access_key [String] AWS secret access key.
+    # @param access_key_id [String] AWS access key ID.
+    # @param secret_access_key [String] AWS secret access key.
     # @param token [String, nil] AWS IAM token.
     # @param region [String] S3 bucket region.
     # @return [Net::HTTPResponse]
-    def get(bucket:, path:, aws_access_key_id:, aws_secret_access_key:, token: nil, region: nil)
+    def get(bucket:, path:, access_key_id:, secret_access_key:, token: nil, region: nil)
       region ||= 'us-east-1' # Most buckets.
       path = path[1..-1] if path[0] == '/'
       now = Time.now().utc.strftime('%a, %d %b %Y %H:%M:%S GMT')
@@ -57,12 +57,12 @@ class Citadel
       string_to_sign << "x-amz-security-token:#{token}\n" if token
       string_to_sign << "/#{bucket}/#{path}"
 
-      signed = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), aws_secret_access_key, string_to_sign)
+      signed = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), secret_access_key, string_to_sign)
       signed_base64 = Base64.encode64(signed)
 
       headers = {
         'date' => now,
-        'authorization' => "AWS #{aws_access_key_id}:#{signed_base64}",
+        'authorization' => "AWS #{access_key_id}:#{signed_base64}",
       }
       headers['x-amz-security-token'] = token if token
 
@@ -76,7 +76,7 @@ class Citadel
       begin
         Chef::HTTP.new("https://#{hostname}").get("#{bucket}/#{path}", headers)
       rescue Net::HTTPServerException => e
-        raise CitadelError.net("Unable to download #{path}: #{e}")
+        raise CitadelError.new("Unable to download #{path}: #{e}")
       end
     end
 
