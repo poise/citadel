@@ -22,15 +22,16 @@ be careful when choosing them.
 
 ## Requirements
 
-This cookbook requires Chef 11.8 or newer. It also requires the EC2 ohai plugin
-to be active. If you are using a VPC, this may require setting the hint file:
+This cookbook requires Chef 12 or newer. It also requires the EC2 ohai plugin
+to be active. If you are using a VPC, this may require setting the hint file
+depending on your version of Ohai/Chef:
 
 ```bash
 $ mkdir -p /etc/chef/ohai/hints
 $ touch /etc/chef/ohai/hints/ec2.json
 ```
 
-If you use knife-ec2 to start the instance, the ec2 hint file is already set for you.
+If you use knife-ec2 to start the instance, the hint file is already set for you.
 
 ## IAM Policy
 
