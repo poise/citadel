@@ -1,7 +1,7 @@
 # Citadel Cookbook
 
 [![Build Status](https://img.shields.io/travis/poise/citadel.svg)](https://travis-ci.org/poise/citadel)
-[![Gem Version](https://img.shields.io/gem/v/citadel.svg)](https://rubygems.org/gems/citadel)
+[![Gem Version](https://img.shields.io/gem/v/poise-citadel.svg)](https://rubygems.org/gems/poise-citadel)
 [![Cookbook Version](https://img.shields.io/cookbook/v/citadel.svg)](https://supermarket.chef.io/cookbooks/citadel)
 [![Coverage](https://img.shields.io/codecov/c/github/poise/citadel.svg)](https://codecov.io/github/poise/citadel)
 [![Gemnasium](https://img.shields.io/gemnasium/poise/citadel.svg)](https://gemnasium.com/poise/citadel)
