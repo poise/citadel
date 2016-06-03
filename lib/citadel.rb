@@ -54,13 +54,13 @@ class Citadel
         # Creds loaded from Ohai.
         @node['ec2']['iam']['security-credentials'].values.first
       else
-        metadata_service = Chef::HTTP.new('http://169.254.169.254')
-        iam_role = metadata_service.get('latest/meta-data/iam/security-credentials/')
-        if iam_role.nil? || iam_role.empty?
-          raise 'Unable to find IAM role for node from EC2 metadata'
-        else
+        begin
+          metadata_service = Chef::HTTP.new('http://169.254.169.254')
+          iam_role = metadata_service.get('latest/meta-data/iam/security-credentials/')
           creds_json = metadata_service.get("latest/meta-data/iam/security-credentials/#{iam_role}")
           Chef::JSONCompat.parse(creds_json)
+        rescue Net::HTTPServerException
+          raise CitadelError.new('Unable to find IAM credentials for node from EC2 metadata')
         end
       end
       {
@@ -69,7 +69,7 @@ class Citadel
         token: role_creds['Token'],
       }
     else
-      raise 'Unable to find S3 credentials'
+      raise CitadelError.new('Unable to find S3 credentials')
     end
   end
 

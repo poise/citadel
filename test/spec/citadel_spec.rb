@@ -67,4 +67,17 @@ describe Citadel do
       subject
     end
   end # /context with direct metadata access
+
+  context 'with no IAM role' do
+    before do
+      override_attributes['ec2'] ||= {}
+    end
+
+    it do
+      fake_http = double('metadata_service')
+      expect(fake_http).to receive(:get).with('latest/meta-data/iam/security-credentials/').and_raise(Net::HTTPServerException.new(nil, nil))
+      expect(Chef::HTTP).to receive(:new).with('http://169.254.169.254').and_return(fake_http)
+      expect { subject }.to raise_error Citadel::CitadelError
+    end
+  end # /context with no IAM role
 end
