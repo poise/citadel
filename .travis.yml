@@ -2,7 +2,7 @@ sudo: false
 cache: bundler
 language: ruby
 rvm:
-- '2.2'
+- 2.3.1
 env:
   global:
   - AWS_SECURITY_GROUP_ID=sg-accb7ad7
