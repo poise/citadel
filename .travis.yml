@@ -5,18 +5,14 @@ rvm:
 - 2.3.1
 env:
   global:
-  - AWS_SECURITY_GROUP_ID=sg-accb7ad7
-  - AWS_SUBNET_ID=subnet-ca674af7
-  - AWS_SSH_KEY_ID=citadel-kitchen
   - secure: G68O+EByjjbIZZmMVV2xQvYlAFqW8LHBj/j82E5mspvVxwhpqn5JdEUpPjR9GeD5Cjt2V13l0353hI9/KyZKwx2iuBR3lQQkyAZIb147bUpYT/yQuXLSYEmt7HxyPOrWCZ2aP0253WPGamKX+bK/OUh1PAbOq5EbTh+2qYvWXAE=
   - secure: xXfMmQd6zQ7GUDH2+uGHukNW6ZvJQKIiDVi1rlqTF2IHCcgFzkKGR4Pb9JwEA2c8S0z/KSZ6+3F9o66735Oe53Yvoat18WfdFNrp7q8nPk68hZY2IVA6La7/g3SUhHXvija6d8ywRMwIH3ms6r3aVk2/vQnFxojRzbgxMf54XQg=
   - secure: rwKhSzXKW1WAmofn+Z3Z9PfSQVU5/O84qjQjfVw0H3Cq7+vky4/ES+lnQqiMigY0E8MtxUHCidThPGMKE9rJzeLr/ARrJ+9D5xd927Pm5P+nnWsIdh8m38db914henn7AXDZzjbP+l+sbut5EdO2Hixl/qWgzoojSic276MSy9Q=
   - secure: T0/zwIemVsXxxqhmIPqdp62TOH+ydZ1F/Fjvz2rEfal976UAfqAOZXnE3OHXOWYC2K/JIJmB+uaFh2Cv8M+lrYa/R3KjB5SYAVwdC6R55kYTRHz7m9XO0XToSoWRi7hjssbPaVsd/v2S3lO78sdn+Ormw6Ksr2IAl8pgxVzE/YI=
-  - secure: lvJZ2kkD32TPQg8loH5Jd5hGUzfBoL8WqfYdMyghYxe8+j+9915nz6xIiudQTEsxfh/KDvhbsR4xSqRvISsx8etTmzZ2M9HlNFFW0rHIQLrbvPNynlrOGZ88Tj2V1b7KgRXdXthLMi/fWwAmJMUsllUYE7i5QLLx2Ylf8iz1FEM=
+  - secure: Fj5+nhxolLHo8nMfwsvtOpYUMaAi6nCRkL5eokLJmzAswrHsTyxYGB+u6s4gdiD1QCB4O/R0qf5PIeVKheXxi6oZPQhMpKYiB2zZhvcMmKX1gbzpVs4cmY75JaogO22P1+oPxbGInSWypyYghQODhREzAmpbDpK6RqaGvV4A2lU=
 before_install: gem install bundler
 bundler_args: "--binstubs=$PWD/bin --jobs 3 --retry 3"
 script:
-- "openssl rsa -in test/ec2/citadel-kitchen.pem -passin env:KITCHEN_KEY_PASS -out test/ec2/citadel-kitchen.key"
 - "./bin/rake travis"
 gemfile:
 - test/gemfiles/chef-12.gemfile
