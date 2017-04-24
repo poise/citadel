@@ -1,0 +1,8 @@
+{
+  "generator-poise": {
+    "created": true,
+    "name": "poise-citadel",
+    "cookbookName": "citadel",
+    "noMinor": true
+  }
+}
