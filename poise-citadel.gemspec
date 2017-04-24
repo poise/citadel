@@ -26,8 +26,9 @@ Gem::Specification.new do |spec|
   spec.description = 'DSL for accessing secret data stored on S3 using IAM roles.'
   spec.summary = spec.description
   spec.homepage = 'https://github.com/poise/citadel'
-  spec.license = 'Apache 2.0'
+  spec.license = 'Apache-2.0'
   spec.metadata['halite_name'] = 'citadel'
+  spec.metadata['platforms'] = 'any'
 
   spec.files = `git ls-files`.split($/)
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
