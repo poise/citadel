@@ -33,6 +33,8 @@ $ touch /etc/chef/ohai/hints/ec2.json
 
 If you use knife-ec2 to start the instance, the hint file is already set for you.
 
+In Chef 13 and newer, this plugin is automatically enabled so you don't need to do anything.
+
 ## IAM Policy
 
 By default, your role will not be able to access any files in your private S3
